@@ -1,0 +1,119 @@
+<html>
+  <head>
+     <script>
+      //alle code die je schrijft komt binnen de script tags
+      //text naar je scherm doe je met document.write(text)
+      //popup maken met alert (https://www.w3schools.com/jsref/met_win_alert.asp)
+      //input vragen met prompt (https://www.w3schools.com/jsref/met_win_prompt.asp)
+      //operators (https://www.w3schools.com/jsref/jsref_operators.asp)
+      //string omzetten naar number met parseInt (https://www.w3schools.com/jsref/jsref_parseint.asp)
+      //Sting omzetten naar decimaal (float) met parseFloat (https://www.w3schools.com/jsref/jsref_parsefloat.asp)
+      //string omzetten naar decimaal getal (float) met parseFloat (https://www.w3schools.com/jsref/jsref_parsefloat.asp)
+      //debugging https://www.w3schools.com/js/js_debugging.asp
+      //debugging met console (https://www.w3schools.com/jsref/obj_console.asp)
+      // zie hier encoding: http://www.javascripter.net/faq/greekletters.htm
+      // naar locale: https://www.w3schools.com/jsref/jsref_tolocalestring_number.asp
+      // afronden: https://www.w3schools.com/jsref/jsref_tofixed.asp
+      
+      function bereken()
+      {
+		// Maak resultaatmelting leeg
+		document.getElementById("resultaat").innerHTML = "";
+      
+        var startKapitaal = parseInt(document.getElementById("startkapitaal").value);
+        if (isNaN(startKapitaal))
+        // Kijk of invoer geldig is
+        {
+          document.getElementById("resultaat").innerHTML = "Vul een goede startkapitaal in";
+          return;
+        }
+
+      
+        var rentePercentage = parseInt(document.getElementById("rentepercentage").value)/100;
+        if (isNaN(rentePercentage))
+        // Kijk of invoer geldig is
+        {
+          document.getElementById("resultaat").innerHTML = "Vul een goede rentepercentage in";
+          return;
+        }
+      
+        var rentePeriode = parseInt(document.getElementById("renteperiode").value) ;
+        if (isNaN(rentePeriode))
+        // Kijk of invoer geldig is
+        {
+          document.getElementById("resultaat").innerHTML = "Vul een goede renteperiode in";
+          return;
+        }
+      
+        var eindKapitaal = 0;
+        
+        var renteOpRente = 1;
+      
+        var Land = document.getElementById("Land").value;
+      
+        switch (Land) {
+        case "Nederland":
+          var opmaak = { style: "currency",currency: "EUR"};
+          var locale = "nl-NL";
+          break;
+        case "Finland":
+          var opmaak = { style: "currency",currency: "EUR"};
+          var locale = "fi-FI";
+          break;
+        case "Amerika":
+          var opmaak = { style: "currency",currency: "USD"};
+          var locale = "en-US";
+          break;
+        case "Engeland":
+          var opmaak = { style: "currency",currency: "GBP"};
+          var locale = "en-GB";
+          break;
+        }
+        
+        // totale rente (rente op rente) = ( 1 + rente) ^ looptijd
+        for (var i = 0; i<rentePeriode ; i++){
+          renteOpRente = renteOpRente * ( 1 + rentePercentage);
+        }
+        
+        eindKapitaal = startKapitaal * renteOpRente;
+
+        document.getElementById("resultaat").innerHTML = "Eindkapitaal na " + rentePeriode +  " jaar is " + eindKapitaal.toLocaleString(locale,opmaak);
+      }
+
+     </script>
+  </head>
+  
+  <body>
+  <div id = "formulier"><h1> Bereken het eindkapitaal </h1></div>
+  <label for="Land">Kies een land:</label>
+  <select name="Land" id="Land">
+    <option value="Nederland">Nederland</option>
+    <option value="Finland">Finland</option>
+    <option value="Amerika">Amerika</option>
+    <option value="Engeland">Engeland</option>
+  </select>
+  <br><br>
+  <label>Vul het startkapitaal in</label>
+  <input type="text" id="startkapitaal" name="startkapitaal"><br><br>
+
+  <label>Vul het rentepercentage in</label>
+  <input type="text" id="rentepercentage" name="rentepercentage"><br><br>
+
+  <label>Vul de renteperiode in</label>
+  <input type="text" id="renteperiode" name="renteperiod"><br><br>
+
+  
+  <button onclick="bereken()">Bereken</button>
+
+  <p>
+  <div id="resultaat"></div>
+ 
+ 
+</body>
+  
+  
+  
+  
+  
+  
+</html>
